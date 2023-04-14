@@ -1,6 +1,7 @@
 //controller
 //es6 modules. by default modules use strict
-import View from './view.js';
+import View from "./view.js";
+import Store from "./model.js";
 
 // const App = {
 //     //All of our selected HTML elements in their own namespace
@@ -136,8 +137,26 @@ import View from './view.js';
 //
 // window.addEventListener('load', () => App.init());
 
+const players = [
+    {
+        id: 1,
+        name: "Player 1",
+        iconClass: "fa-x",
+        colorClass: "turquoise",
+    },
+    {
+        id: 2,
+        name: "Player 2",
+        iconClass: "fa-o",
+        colorClass: "yellow",
+    },
+];
+
 function init() {
     const view = new View();
+    const store = new Store(players);
+
+    console.log(store.game);
 
     view.bindGameResetEvent(event => {
         console.log("Reset Event");
@@ -154,8 +173,11 @@ function init() {
         console.log(event);
     });
 
+    view.bindPlayerMoveEvent((event) => {
+        view.setTurnIndicator(players[1]);
+        view.handlePlayerMove(event.target, players[1]);
+    });
 
-    console.log(view.$.turn);
 }
 
 window.addEventListener('load', () => init());
