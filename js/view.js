@@ -30,16 +30,17 @@ export default class View {
      */
 
     bindGameResetEvent(handler) {
-        this.$.resetBtn.addEventListener('click', handler)
+        this.$.resetBtn.addEventListener('click', handler);
+        this.$.modalBtn.addEventListener("click", handler);
     }
 
     bindNewRoundEvent(handler) {
-        this.$.newRoundBtn.addEventListener('click', handler)
+        this.$.newRoundBtn.addEventListener('click', handler);
     }
 
     bindPlayerMoveEvent(handler) {
         this.$$.squares.forEach(square => {
-            square.addEventListener('click', handler)
+            square.addEventListener('click', () => handler(square));
         });
     }
 
@@ -48,6 +49,34 @@ export default class View {
      *
      * es6 private method is denoted with a #
      */
+    openModal(message) {
+        this.$.modal.classList.remove('hidden');
+        this.$.modalText.innerText = message;
+    }
+
+    closeAll() {
+        this.#closeModal();
+        this.#closeMenu();
+    }
+
+    clearMoves() {
+        this.$$.squares.forEach((square) => {
+            square.replaceChildren()
+        });
+    }
+
+    #closeModal(){
+        this.$.modal.classList.add('hidden');
+    }
+
+    #closeMenu() {
+        this.$.menuItems.classList.add('hidden');
+        this.$.menuBtn.classList.remove('border');
+
+        const icon = this.$.menuBtn.querySelector('i');
+        icon.classList.add("fa-chevron-down");
+        icon.classList.remove("fa-chevron-up");
+    }
 
     //es6 private method is denoted with a #
     #toggleMenu() {
