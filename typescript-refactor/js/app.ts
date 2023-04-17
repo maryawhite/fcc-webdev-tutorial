@@ -1,9 +1,10 @@
 //controller
 //es6 modules. by default, modules use strict
+import type { Player } from "./types"
 import View from "./view.js";
 import Model from "./model.js";
 
-const players = [
+const players: Player[] = [
     {
         id: 1,
         name: "Player 1",
